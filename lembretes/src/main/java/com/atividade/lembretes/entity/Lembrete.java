@@ -3,6 +3,7 @@ package com.atividade.lembretes.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "lembrete", schema = "public")
 public class Lembrete {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
