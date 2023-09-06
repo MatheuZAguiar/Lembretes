@@ -25,22 +25,32 @@ public class PessoaController {
         List<PessoaDTO> pessoasDTO = pessoaService.obterTodasAsPessoas();
         return ResponseEntity.ok(pessoasDTO);
     }
-    @PostMapping
-    public ResponseEntity<PessoaDTO> cadastrarPessoa(@RequestBody PessoaDTO pessoaDTO) {
-        PessoaDTO savedPessoaDTO = pessoaService.cadastrarPessoa(pessoaDTO);
-        return ResponseEntity.created(null).body(savedPessoaDTO);
-    }
-
     @GetMapping("/{nome}")
     public ResponseEntity<PessoaDTO> obterPessoaPorNome(@PathVariable String nome) {
         PessoaDTO pessoaDTO = pessoaService.obterPessoaPorNome(nome);
         return ResponseEntity.ok(pessoaDTO);
     }
-
+    @PostMapping
+    public ResponseEntity<PessoaDTO> cadastrarPessoa(@RequestBody PessoaDTO pessoaDTO) {
+        PessoaDTO savedPessoaDTO = pessoaService.cadastrarPessoa(pessoaDTO);
+        return ResponseEntity.created(null).body(savedPessoaDTO);
+    }
     @PostMapping("/{pessoaId}/lembretes")
     public ResponseEntity<LembreteDTO> associarLembrete(@PathVariable Long pessoaId, @RequestBody LembreteDTO lembreteDTO) {
         LembreteDTO savedLembreteDTO = pessoaService.associarLembrete(pessoaId, lembreteDTO);
         return ResponseEntity.created(null).body(savedLembreteDTO);
+    }
+
+    @PutMapping("/{pessoaId}")
+    public ResponseEntity<PessoaDTO> atualizarPessoa(@PathVariable Long pessoaId, @RequestBody PessoaDTO pessoaDTO) {
+        PessoaDTO updatedPessoaDTO = pessoaService.atualizarPessoa(pessoaId, pessoaDTO);
+        return ResponseEntity.ok(updatedPessoaDTO);
+    }
+
+    @DeleteMapping("/{pessoaId}")
+    public ResponseEntity<Void> deletarPessoa(@PathVariable Long pessoaId) {
+        pessoaService.deletarPessoa(pessoaId);
+        return ResponseEntity.ok().build();
     }
 }
 

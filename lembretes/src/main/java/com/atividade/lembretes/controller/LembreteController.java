@@ -22,4 +22,18 @@ public class LembreteController {
         LembreteDTO savedLembreteDTO = lembreteService.criarLembrete(lembreteDTO);
         return ResponseEntity.created(null).body(savedLembreteDTO);
     }
+
+    @PutMapping("/{lembreteId}")
+    public ResponseEntity<LembreteDTO> atualizarLembrete(
+            @PathVariable Long lembreteId,
+            @RequestBody LembreteDTO lembreteDTO) {
+        LembreteDTO updatedLembreteDTO = lembreteService.atualizarLembrete(lembreteId, lembreteDTO);
+        return ResponseEntity.ok(updatedLembreteDTO);
+    }
+
+    @DeleteMapping("/{lembreteId}")
+    public ResponseEntity<Void> deletarLembrete(@PathVariable Long lembreteId) {
+        lembreteService.deletarLembrete(lembreteId);
+        return ResponseEntity.ok().build();
+    }
 }

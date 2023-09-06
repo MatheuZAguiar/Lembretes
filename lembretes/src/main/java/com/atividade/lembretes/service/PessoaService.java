@@ -82,4 +82,21 @@ public class PessoaService {
         dto.setTexto(lembrete.getTexto());
         return dto;
     }
+
+    public PessoaDTO atualizarPessoa(Long pessoaId, PessoaDTO pessoaDTO) {
+        Pessoa pessoa = pessoaRepository.findById(pessoaId)
+                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
+
+        pessoa.setNome(pessoaDTO.getNome());
+
+        Pessoa updatedPessoa = pessoaRepository.save(pessoa);
+        return mapPessoaToDTO(updatedPessoa);
+    }
+
+    public void deletarPessoa(Long pessoaId) {
+        Pessoa pessoa = pessoaRepository.findById(pessoaId)
+                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
+
+        pessoaRepository.delete(pessoa);
+    }
 }

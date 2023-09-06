@@ -22,6 +22,23 @@ public class LembreteService {
         return mapLembreteToDTO(savedLembrete);
     }
 
+    public LembreteDTO atualizarLembrete(Long lembreteId, LembreteDTO lembreteDTO) {
+        Lembrete existingLembrete = lembreteRepository.findById(lembreteId)
+                .orElseThrow(() -> new RuntimeException("Lembrete não encontrado"));
+        existingLembrete.setTexto(lembreteDTO.getTexto());
+        Lembrete updatedLembrete = lembreteRepository.save(existingLembrete);
+
+        return mapLembreteToDTO(updatedLembrete);
+    }
+
+    public void deletarLembrete(Long lembreteId) {
+        Lembrete existingLembrete = lembreteRepository.findById(lembreteId)
+                .orElseThrow(() -> new RuntimeException("Lembrete não encontrado"));
+
+        // Delete o lembrete do banco de dados
+        lembreteRepository.delete(existingLembrete);
+    }
+
     private Lembrete mapDTOToLembrete(LembreteDTO dto) {
         Lembrete lembrete = new Lembrete();
         lembrete.setTexto(dto.getTexto());
